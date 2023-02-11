@@ -5,8 +5,10 @@ This is an e-commerce project
 
 Technical Assignment - Backend Web API Development
 Functional Requirements:
+
 • Design a database model for a simple e-commerce web site with products and shopping cart.
 • Develop RESTful Web API that can perform these functionalities:
+
 a) Get list of products from the database. The API response must have at least these details:
 Product Name, Description and Unit Price.
 b) Add product into shopping cart. Increase the order quantity if same product is added.
