@@ -48,33 +48,49 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Product product = productRepository.findById(productId).get();
 
         //for each cart item in shopping cart
-        for (ShoppingCart cartItem : shoppingCartRepository.findAll()) {
-            //if found cart item name and product name is equals, add quantity by 1
-            List<ShoppingCart> cartItems = shoppingCartRepository.findAll();
-            for (ShoppingCart item : cartItems) {
-                if (product.getName().equals(cartItem.getProductName())) {
-                    item.setProductQuantity(item.getProductQuantity() + 1);
-                    item.setTotalAmount(item.getProductQuantity() * item.getUnitPrice());
-                    shoppingCartRepository.save(item);
-                    return item;
-                }
-            }
 
+        //if found cart item name and product name is equals, add quantity by 1
+        List<ShoppingCart> cartItems = shoppingCartRepository.findAll();
+        for (ShoppingCart item : cartItems) {
+            if (product.getName().equals(item.getProductName())) {
+                item.setProductQuantity(item.getProductQuantity() + 1);
+                item.setTotalAmount(item.getProductQuantity() * item.getUnitPrice());
+                shoppingCartRepository.save(item);
+                return item;
+            }
         }
+
 
         ShoppingCart newCartItem = new ShoppingCart();
         shoppingCartRepository.save(newCartItem);
         newCartItem.setProductName(product.getName());
         newCartItem.setProductQuantity(1);
         newCartItem.setUnitPrice(product.getUnitPrice());
-        newCartItem.setTotalAmount(newCartItem.getProductQuantity()* newCartItem.getUnitPrice());
+        newCartItem.setTotalAmount(newCartItem.getProductQuantity() * newCartItem.getUnitPrice());
         shoppingCartRepository.save(newCartItem);
         return newCartItem;
     }
 
     @Override
-    public ShoppingCart removeFromCart(long productId) {
-        return null;
+    public Object removeFromCart(long productId) {
+        if (productRepository.findById(productId).isEmpty()) {
+            return new ResourceNotFoundException("Product not exist with id: " + productId);
+        }
+
+        //get the product object from product repository
+        Product product = productRepository.findById(productId).get();
+
+        //for each cart item in shopping cart
+        List<ShoppingCart> cartItems = shoppingCartRepository.findAll();
+        for (ShoppingCart item : cartItems) {
+            if (product.getName().equals(item.getProductName()) && item.getProductQuantity()>0) {
+                item.setProductQuantity(item.getProductQuantity() - 1);
+                item.setTotalAmount(item.getProductQuantity() * item.getUnitPrice());
+                shoppingCartRepository.save(item);
+                return item;
+            }
+        }
+        return cartItems;
     }
 
 

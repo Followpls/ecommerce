@@ -17,7 +17,7 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Autowired
-    private ShoppingCartService shoppingCartService;
+    final private ShoppingCartService shoppingCartService;
 
     public ShoppingCartController(ShoppingCartService shoppingCartService) {
         super();
@@ -32,7 +32,12 @@ public class ShoppingCartController {
 
     @PutMapping("/add/product={id}")
     public ResponseEntity<ShoppingCart> addToCart(@PathVariable("id") long productId){
-        return new ResponseEntity<ShoppingCart>((MultiValueMap<String, String>) shoppingCartService.addToCart(productId), HttpStatus.OK);
+        return new ResponseEntity<>((MultiValueMap<String, String>) shoppingCartService.addToCart(productId), HttpStatus.OK);
+    }
+
+    @PutMapping("/remove/product={id}")
+    public ResponseEntity<ShoppingCart> removeFromCart(@PathVariable("id") long productId){
+        return new ResponseEntity<>((MultiValueMap<String, String>) shoppingCartService.removeFromCart(productId), HttpStatus.OK);
     }
 
 

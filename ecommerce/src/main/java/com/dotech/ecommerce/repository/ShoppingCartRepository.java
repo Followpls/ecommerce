@@ -1,6 +1,5 @@
 package com.dotech.ecommerce.repository;
 
-import com.dotech.ecommerce.model.Product;
 import com.dotech.ecommerce.model.ShoppingCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 

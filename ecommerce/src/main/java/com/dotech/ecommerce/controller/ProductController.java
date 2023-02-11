@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
     @Autowired
-    private ProductService productService;
+    final private ProductService productService;
 
     public ProductController(ProductService productService) {
         super();
@@ -39,7 +39,7 @@ public class ProductController {
     //build get product by id REST API
     @GetMapping("{id}")
     public ResponseEntity<Product> getProductById(@PathVariable long id) {
-        return new ResponseEntity<Product>(productService.getProductById(id), HttpStatus.OK);
+        return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
 
@@ -47,7 +47,7 @@ public class ProductController {
     @PutMapping("{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable long id,
                                                  @RequestBody Product product) {
-        return new ResponseEntity<Product>(productService.updateProduct(product, id), HttpStatus.OK);
+        return new ResponseEntity<>(productService.updateProduct(product, id), HttpStatus.OK);
     }
 
 

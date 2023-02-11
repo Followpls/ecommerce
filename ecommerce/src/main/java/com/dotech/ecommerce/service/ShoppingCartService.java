@@ -15,7 +15,7 @@ public interface ShoppingCartService {
     //Update
     Object addToCart(long productId);
 
-    ShoppingCart removeFromCart(long productId);
+    Object removeFromCart(long productId);
 
     //Delete
     void deleteCartItem(long id);
