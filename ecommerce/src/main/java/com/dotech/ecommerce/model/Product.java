@@ -23,8 +23,6 @@ public class Product {
     private String description;
     @Column(name = "unit_price")
     private double unitPrice;
-    @Column(name = "quantity")
-    private int quantity;
 
 
 }
