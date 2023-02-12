@@ -6,8 +6,13 @@ import com.dotech.ecommerce.model.ShoppingCart;
 import com.dotech.ecommerce.repository.ProductRepository;
 import com.dotech.ecommerce.repository.ShoppingCartRepository;
 import com.dotech.ecommerce.service.ShoppingCartService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,6 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found in cart with Cart id: " + cartId));
     }
+
 
     //U
     @Override
@@ -104,4 +110,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         shoppingCartRepository.deleteById(cartId);
     }
+
+    @Override
+    public List<ShoppingCart> getCartItemByPageSort(Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by(sortBy));
+
+        Page<ShoppingCart> pagingResult = shoppingCartRepository.findAll(pageable);
+
+        if (pagingResult.hasContent()) {
+            return pagingResult.getContent();
+        } else {
+            return new ArrayList<ShoppingCart>();
+        }
+    }
 }
+
+

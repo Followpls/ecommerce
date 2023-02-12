@@ -4,8 +4,13 @@ import com.dotech.ecommerce.exception.ResourceNotFoundException;
 import com.dotech.ecommerce.model.Product;
 import com.dotech.ecommerce.repository.ProductRepository;
 import com.dotech.ecommerce.service.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -61,6 +66,20 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.deleteById(id);
 
+    }
+
+    @Override
+    public List<Product> getProductByPageSort(Integer pageNo, Integer pageSize, String sortBy) {
+        //API start page at 0, so page no have to -1
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by(sortBy));
+
+        Page<Product> pagingResult = productRepository.findAll(pageable);
+
+        if (pagingResult.hasContent()){
+            return pagingResult.getContent();
+        } else {
+            return new ArrayList<Product>();
+        }
     }
 
 
