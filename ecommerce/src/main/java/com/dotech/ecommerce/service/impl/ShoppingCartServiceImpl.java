@@ -89,14 +89,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         //for each cart item in shopping cart
         List<ShoppingCart> cartItems = shoppingCartRepository.findAll();
-        for (ShoppingCart item : cartItems) {
-            if (product.getName().equals(item.getProductName()) && item.getProductQuantity() > 1) {
-                item.setProductQuantity(item.getProductQuantity() - 1);
-                item.setTotalAmount(item.getProductQuantity() * item.getUnitPrice());
-                shoppingCartRepository.save(item);
-                return item;
-            } else if (product.getName().equals(item.getProductName()) && item.getProductQuantity() == 1) {
-                deleteCartItem(item.getId());
+        for (ShoppingCart cartItem : cartItems) {
+            if (product.getName().equals(cartItem.getProductName()) && cartItem.getProductQuantity() > 1) {
+                cartItem.setProductQuantity(cartItem.getProductQuantity() - 1);
+                cartItem.setTotalAmount(cartItem.getProductQuantity() * cartItem.getUnitPrice());
+                shoppingCartRepository.save(cartItem);
+                return cartItem;
+            } else if (product.getName().equals(cartItem.getProductName()) && cartItem.getProductQuantity() == 1) {
+                deleteCartItem(cartItem.getId());
             }
         }
         return null;
