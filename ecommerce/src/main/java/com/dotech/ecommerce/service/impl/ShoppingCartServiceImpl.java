@@ -60,12 +60,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         //for each cart item in shopping cart
         //if found cart item name and product name is equals, add quantity by 1
         List<ShoppingCart> cartItems = shoppingCartRepository.findAll();
-        for (ShoppingCart item : cartItems) {
-            if (product.getName().equals(item.getProductName())) {
-                item.setProductQuantity(item.getProductQuantity() + 1);
-                item.setTotalAmount(item.getProductQuantity() * item.getUnitPrice());
-                shoppingCartRepository.save(item);
-                return item;
+        for (ShoppingCart cartItem : cartItems) {
+            if (product.getName().equals(cartItem.getProductName())) {
+                cartItem.setProductQuantity(cartItem.getProductQuantity() + 1);
+                cartItem.setTotalAmount(cartItem.getProductQuantity() * cartItem.getUnitPrice());
+                shoppingCartRepository.save(cartItem);
+                return cartItem;
             }
         }
 
