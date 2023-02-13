@@ -36,17 +36,17 @@ public class ShoppingCartController {
 
     @PutMapping("/add/product={id}")
     public ResponseEntity<ShoppingCart> addToCart(@PathVariable("id") long productId){
-        return new ResponseEntity<>((MultiValueMap<String, String>) shoppingCartService.addToCart(productId), HttpStatus.OK);
+        return new ResponseEntity<ShoppingCart>(shoppingCartService.addToCart(productId), HttpStatus.OK);
     }
 
     @PutMapping("/remove/product={id}")
     public ResponseEntity<ShoppingCart> removeFromCart(@PathVariable("id") long productId){
-        return new ResponseEntity<>((MultiValueMap<String, String>) shoppingCartService.removeFromCart(productId), HttpStatus.OK);
+        return new ResponseEntity<ShoppingCart>(shoppingCartService.removeFromCart(productId), HttpStatus.OK);
     }
 
     //Pagination features
     //http://localhost:8080/api/shopping_carts/page&sort?pageSize=3&pageNo=1&sortBy=productName
-    @GetMapping("page&sort")
+    @GetMapping("/page&sort")
     public ResponseEntity<List<ShoppingCart>> getCartItemByPageSort(
             @RequestParam(defaultValue = "1") Integer pageNo,
             @RequestParam(defaultValue = "2") Integer pageSize,

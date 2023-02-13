@@ -64,7 +64,7 @@ public class ProductController {
 
     //Pagination features
     //http://localhost:8080/api/products/page&sort?pageSize=2&pageNo=3&sortBy=unitPrice
-    @GetMapping("page&sort")
+    @GetMapping("/page&sort")
     public ResponseEntity<List<Product>> getProductByPageSort(
             @RequestParam(defaultValue = "1") Integer pageNo,
             @RequestParam(defaultValue = "2") Integer pageSize,

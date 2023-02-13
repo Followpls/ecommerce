@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ShoppingCartService {
 
+    Product checkProductById(long productId);
 
     //Read
     List<ShoppingCart> getAllCartItem();
@@ -14,9 +15,9 @@ public interface ShoppingCartService {
 
 
     //Update
-    Object addToCart(long productId);
+    ShoppingCart addToCart(long productId);
 
-    Object removeFromCart(long productId);
+    ShoppingCart removeFromCart(long productId);
 
     //Delete
     void deleteCartItem(long id);

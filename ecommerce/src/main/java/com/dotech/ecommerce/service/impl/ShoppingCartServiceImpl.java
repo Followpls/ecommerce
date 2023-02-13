@@ -28,6 +28,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
 
+
+
     //R
     @Override
     public List<ShoppingCart> getAllCartItem() {
@@ -41,20 +43,21 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
 
+    @Override
+    public Product checkProductById(long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not exist with id: " + productId));
+    }
+
+
     //U
     @Override
-    public Object addToCart(long productId) {
-
-        //check if product is exists in product repository, if no, throw resource not found exception
-        if (productRepository.findById(productId).isEmpty()) {
-            return new ResourceNotFoundException("Product not exist with id: " + productId);
-        }
+    public ShoppingCart addToCart(long productId) {
 
         //get the product object from product repository
-        Product product = productRepository.findById(productId).get();
+        Product product = checkProductById(productId);
 
         //for each cart item in shopping cart
-
         //if found cart item name and product name is equals, add quantity by 1
         List<ShoppingCart> cartItems = shoppingCartRepository.findAll();
         for (ShoppingCart item : cartItems) {
@@ -78,13 +81,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Object removeFromCart(long productId) {
-        if (productRepository.findById(productId).isEmpty()) {
-            return new ResourceNotFoundException("Product not exist with id: " + productId);
-        }
+    public ShoppingCart removeFromCart(long productId) {
+
 
         //get the product object from product repository
-        Product product = productRepository.findById(productId).get();
+        Product product = checkProductById(productId);
 
         //for each cart item in shopping cart
         List<ShoppingCart> cartItems = shoppingCartRepository.findAll();
@@ -98,9 +99,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 deleteCartItem(item.getId());
             }
         }
-        return cartItems;
+        return null;
     }
-
 
     //D
     @Override
