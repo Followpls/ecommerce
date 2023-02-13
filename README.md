@@ -70,5 +70,14 @@ step 9:check if the product been remove from the cart with GET method at http://
 
 
 
+Extra:
+to Get object with pagination and sorting features
 
+for product:
+http://localhost:8080/api/products/page&sort?pageSize=2&pageNo=3&sortBy=unitPrice
+sortBy can be id, name, description, unitPrice unitPrice
+
+for shopping cart:
+http://localhost:8080/api/shopping_carts/page&sort?pageSize=3&pageNo=1&sortBy=productName
+sortBy can be id, productName, productQuantity, unitPrice, totalAmount
 
