@@ -21,7 +21,7 @@ Product Name, Quantity, Unit Price, Total Amount.
 To complete a-d
 
 step 1:add product with POST method at http://localhost:8080/api/products
-- using json format
+using json format
 {
   "name" : "product name",
   "description" : "product description",
